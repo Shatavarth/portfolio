@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Menu, X, Linkedin, Mail, MapPin, ExternalLink, 
-  ChevronRight, ChevronDown, Database, BarChart3, 
-  BrainCircuit, Layout, Terminal, Award, Briefcase, 
+  Menu, X, Linkedin, Mail, MapPin, 
+  ChevronDown, Database, BarChart3, 
+  BrainCircuit, Layout, Terminal, Award, 
   GraduationCap, Cpu, Globe, ArrowRight 
 } from 'lucide-react';
 
@@ -10,6 +10,7 @@ import {
  * SHATAVARTH WARULKAR - PROFESSIONAL PORTFOLIO
  * Theme: "Hytec" / Data Intelligence / Modern Dark UI
  * Tech Stack: React + Tailwind CSS
+ * Deployment Ready: GitHub Pages Compatible
  */
 
 // --- Data extracted from Resume ---
@@ -42,7 +43,6 @@ const skills = {
   ]
 };
 
-// Filtered to only show Data/BA/BI related roles
 const experience = [
   {
     role: "Business Data Analyst",
@@ -149,7 +149,7 @@ const NavLink = ({ href, children, active, onClick }) => (
       e.preventDefault();
       onClick(href);
     }}
-    className={`text-sm font-medium transition-colors duration-300 ${
+    className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${
       active ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
     }`}
   >
@@ -262,12 +262,11 @@ export default function Portfolio() {
     }
   };
 
-  // Scroll spy
+  // Scroll spy to update active navigation link
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
       
-      // Simple spy
       const sections = ['home', 'about', 'experience', 'skills', 'blog', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -340,6 +339,7 @@ export default function Portfolio() {
                 onClick={(e) => {
                     e.preventDefault();
                     scrollTo(`#${item.toLowerCase()}`);
+                    setIsMenuOpen(false);
                 }}
               >
                 {item}
@@ -353,7 +353,7 @@ export default function Portfolio() {
       <section id="home" className="relative min-h-screen flex items-center justify-center pt-16 z-10 overflow-hidden">
          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
             
-            <div className="order-2 md:order-1 space-y-6 animate-fade-in-up">
+            <div className="order-2 md:order-1 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                 Available for New Projects
@@ -390,8 +390,20 @@ export default function Portfolio() {
               </div>
 
               <div className="flex gap-6 pt-8 text-slate-500">
-                <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors"><Linkedin size={24} /></a>
-                <a href={`mailto:${personalInfo.email}`} className="hover:text-cyan-400 transition-colors"><Mail size={24} /></a>
+                <a 
+                  href={`https://${personalInfo.linkedin}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  <Linkedin size={24} />
+                </a>
+                <a 
+                  href={`mailto:${personalInfo.email}`} 
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  <Mail size={24} />
+                </a>
               </div>
             </div>
 
@@ -543,7 +555,10 @@ export default function Portfolio() {
           
           <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-8 md:p-12 shadow-2xl">
             <div className="grid md:grid-cols-2 gap-8 mb-8">
-               <a href={`mailto:${personalInfo.email}`} className="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-cyan-500/30">
+               <a 
+                 href={`mailto:${personalInfo.email}`} 
+                 className="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-cyan-500/30"
+               >
                  <div className="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                    <Mail size={24} />
                  </div>
@@ -551,7 +566,12 @@ export default function Portfolio() {
                  <p className="text-sm text-slate-400 group-hover:text-cyan-400 transition-colors">{personalInfo.email}</p>
                </a>
 
-               <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-blue-500/30">
+               <a 
+                 href={`https://${personalInfo.linkedin}`} 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-blue-500/30"
+               >
                  <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                    <Linkedin size={24} />
                  </div>
