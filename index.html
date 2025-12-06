@@ -1,596 +1,615 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Menu, X, Linkedin, Mail, MapPin, 
-  ChevronDown, Database, BarChart3, 
-  BrainCircuit, Layout, Terminal, Award, 
-  GraduationCap, Cpu, Globe, ArrowRight 
-} from 'lucide-react';
-
-/**
- * SHATAVARTH WARULKAR - PROFESSIONAL PORTFOLIO
- * Theme: "Hytec" / Data Intelligence / Modern Dark UI
- * Tech Stack: React + Tailwind CSS
- * Deployment Ready: GitHub Pages Compatible
- */
-
-// --- Data extracted from Resume ---
-
-const personalInfo = {
-  name: "Shatavarth Warulkar",
-  title: "Business Intelligence & Data Analyst",
-  location: "Toronto, ON",
-  email: "shatavarth@gmail.com",
-  linkedin: "linkedin.com/in/shatavarth",
-  summary: "Business Intelligence & Data Analyst with 3+ years of experience in data analysis, business analysis, project management, and process automation. Adept at deriving actionable insights from complex data, leading cross-functional initiatives, and leveraging AI-powered tools to optimize workflows.",
-};
-
-const skills = {
-  core: [
-    "Data Analysis (SQL, Power BI, Excel)",
-    "Business Analysis & Requirements Gathering",
-    "Project Management (Agile, Kanban)",
-    "Process Automation (Power Automate)",
-    "Generative AI & Prompt Engineering",
-    "Stakeholder Management"
-  ],
-  technical: [
-    { name: "BI Tools", items: "Power BI, Tableau, Excel, SQL, Cognos Analytics", icon: <BarChart3 className="w-5 h-5" /> },
-    { name: "Automation", items: "Power Automate, Power Apps", icon: <Cpu className="w-5 h-5" /> },
-    { name: "AI Tools", items: "OpenAI APIs, ChatGPT, Copilot, Gemini, Prompt Eng.", icon: <BrainCircuit className="w-5 h-5" /> },
-    { name: "Database & Code", items: "SQL Server, Python, C, Power Query", icon: <Database className="w-5 h-5" /> },
-    { name: "Project Mgmt", items: "Jira, Confluence, Trello, Miro", icon: <Layout className="w-5 h-5" /> },
-    { name: "Web & Media", items: "WordPress, HTML/CSS, Figma, Adobe Suite", icon: <Globe className="w-5 h-5" /> }
-  ]
-};
-
-const experience = [
-  {
-    role: "Business Data Analyst",
-    company: "Joseph Group",
-    location: "Hamilton, ON",
-    period: "Nov 2023 – Present",
-    desc: [
-      "Developed and automated dashboards using Power BI, Excel, DAX, and SQL queries for operations and financial reporting.",
-      "Reduced manual tasks by 60% via automation solutions using Power Automate and Power Apps.",
-      "Leveraged Generative AI to build tools for operational analysis, reducing reporting time by 40%.",
-      "Partnered cross-functionally to implement process improvements using Agile, Lean, and Six Sigma methods."
-    ]
-  },
-  {
-    role: "Junior Business Analyst (Co-op)",
-    company: "Joseph Group",
-    location: "Hamilton, ON",
-    period: "Sep 2023 – Oct 2023",
-    desc: [
-      "Created and maintained SOPs, policies, and process documentation for operations.",
-      "Supported business operations through KPI tracking and dashboard development.",
-      "Used Jira, Confluence, and SharePoint to manage sprints, tasks, and documentation."
-    ]
-  },
-  {
-    role: "Business Analyst (Capstone)",
-    company: "Mohawk College",
-    location: "Hamilton, ON",
-    period: "Jan 2023 – Aug 2023",
-    desc: [
-      "Conducted stakeholder interviews/workshops to streamline Continuing Education application workflows.",
-      "Built wireframes and requirement docs leading to a 25% improvement in processing speed."
-    ]
-  },
-  {
-    role: "Junior BI Analyst",
-    company: "Shri Shri Industries",
-    location: "Pune, India",
-    period: "Aug 2022 – Oct 2022",
-    desc: [
-      "Developed analytical dashboards and automated Excel reports for production teams.",
-      "Analyzed trends in cost, labor, and efficiency metrics to support decision-making."
-    ]
-  }
-];
-
-const education = [
-  {
-    degree: "Postgraduate Certificate, Project Management",
-    school: "Mohawk College, Canada",
-    year: "Jan 2024 - Aug 2024"
-  },
-  {
-    degree: "Postgraduate Certificate, Business Analytics",
-    school: "Mohawk College, Canada",
-    year: "Jan 2023 - Oct 2023"
-  },
-  {
-    degree: "Bachelor of Engineering - Information Technology",
-    school: "Sinhgad College of Engineering, India",
-    year: "Graduated"
-  }
-];
-
-const certifications = [
-  "IBM - Business Intelligence Analyst - Intermediate",
-  "360 Lean Six Sigma Yellow Belt Certification",
-  "IBM - Enterprise Design Thinking Practitioner",
-  "Python Website Development Workshop",
-  "Leveraging Generative AI for PM - Future Trends",
-  "IIBA (International Institute of Business Analysis) Member"
-];
-
-const blogs = [
-  {
-    id: 1,
-    title: "Optimizing BI Workflows with Generative AI",
-    date: "October 12, 2025",
-    category: "Artificial Intelligence",
-    snippet: "How LLMs can assist in writing complex DAX queries and cleaning SQL data faster than ever before."
-  },
-  {
-    id: 2,
-    title: "Automating the Mundane: Power Automate in Action",
-    date: "September 28, 2025",
-    category: "Automation",
-    snippet: "A case study on reducing manual data entry by 60% using simple flows and SharePoint triggers."
-  },
-  {
-    id: 3,
-    title: "The Future of Data Governance",
-    date: "August 15, 2025",
-    category: "Data Strategy",
-    snippet: "Why data governance is becoming the backbone of successful AI implementation in enterprise environments."
-  }
-];
-
-// --- Components ---
-
-const NavLink = ({ href, children, active, onClick }) => (
-  <a
-    href={href}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(href);
-    }}
-    className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${
-      active ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
-    }`}
-  >
-    {children}
-  </a>
-);
-
-const SectionTitle = ({ title, subtitle }) => (
-  <div className="mb-12">
-    <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center gap-3">
-      <span className="w-2 h-8 bg-cyan-500 rounded-sm inline-block"></span>
-      {title}
-    </h2>
-    {subtitle && <p className="text-slate-400 ml-5">{subtitle}</p>}
-  </div>
-);
-
-const SkillCard = ({ category, items, icon }) => (
-  <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
-    <div className="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
-      <div className="p-2 bg-cyan-500/10 rounded-lg">
-        {icon}
-      </div>
-      <h3 className="font-semibold text-lg text-slate-100">{category}</h3>
-    </div>
-    <p className="text-slate-400 text-sm leading-relaxed">
-      {items}
-    </p>
-  </div>
-);
-
-const TimelineItem = ({ role, company, location, period, desc, isLast }) => (
-  <div className="relative pl-8 md:pl-0">
-    {/* Mobile Line */}
-    <div className={`md:hidden absolute left-3 top-0 bottom-0 w-0.5 bg-slate-800 ${isLast ? 'h-full' : ''}`}></div>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shatavarth Warulkar | BI & Data Analyst</title>
     
-    <div className="md:grid md:grid-cols-12 md:gap-8 group">
-      {/* Date - Left Side */}
-      <div className="hidden md:block md:col-span-3 text-right pt-1 relative">
-         <p className="text-cyan-400 font-mono text-sm">{period}</p>
-         <p className="text-slate-500 text-xs mt-1">{location}</p>
-         {/* Desktop Dot */}
-         <div className="absolute right-[-21px] top-2 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 group-hover:shadow-[0_0_10px_rgba(6,182,212,0.6)] transition-all z-10"></div>
-      </div>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-      {/* Center Line Desktop */}
-      <div className="hidden md:block absolute left-[25%] top-0 bottom-0 w-0.5 bg-slate-800 -ml-[1px]"></div>
-
-      {/* Content - Right Side */}
-      <div className="md:col-span-9 mb-12 relative">
-        {/* Mobile Dot */}
-        <div className="md:hidden absolute left-[-25px] top-1.5 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
-        
-        <div className="md:hidden mb-2">
-            <span className="text-cyan-400 text-xs font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">{period}</span>
-        </div>
-
-        <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">{role}</h3>
-        <h4 className="text-lg text-slate-300 mb-3">{company} <span className="text-slate-600 text-sm font-normal md:hidden">• {location}</span></h4>
-        
-        <ul className="space-y-2">
-          {desc.map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-slate-400 text-sm">
-              <span className="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </div>
-);
-
-const BlogPost = ({ title, date, category, snippet }) => (
-  <article className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 group cursor-pointer flex flex-col h-full">
-    <div className="h-40 bg-gradient-to-br from-slate-800 to-slate-900 relative p-6 flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-      <Terminal className="w-12 h-12 text-slate-700 group-hover:text-cyan-500/50 transition-colors duration-500 transform group-hover:scale-110" />
-      <div className="absolute top-4 right-4 text-xs font-bold text-cyan-500 bg-cyan-950/50 px-2 py-1 rounded border border-cyan-900">
-        {category}
-      </div>
-    </div>
-    <div className="p-6 flex-1 flex flex-col">
-      <div className="text-xs text-slate-500 mb-2 font-mono">{date}</div>
-      <h3 className="text-lg font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors line-clamp-2">
-        {title}
-      </h3>
-      <p className="text-slate-400 text-sm line-clamp-3 mb-4 flex-1">
-        {snippet}
-      </p>
-      <div className="flex items-center text-cyan-500 text-sm font-medium mt-auto group-hover:translate-x-1 transition-transform">
-        Read Article <ArrowRight className="w-4 h-4 ml-1" />
-      </div>
-    </div>
-  </article>
-);
-
-export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  // Smooth scroll handler
-  const scrollTo = (id) => {
-    const element = document.getElementById(id.replace('#', ''));
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(id.replace('#', ''));
-      setIsMenuOpen(false);
-    }
-  };
-
-  // Scroll spy to update active navigation link
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      
-      const sections = ['home', 'about', 'experience', 'skills', 'blog', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            setActiveSection(section);
-            break;
-          }
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                    mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                },
+                extend: {
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                        'spin-reverse-slow': 'spin 15s linear infinite reverse',
+                    }
+                }
+            }
         }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for hytec feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-100">
 
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-100">
-      
-      {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2"></div>
-      </div>
+    <!-- Background Ambience -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2"></div>
+    </div>
 
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-lg' : 'bg-transparent py-4'}`}>
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="text-2xl font-bold text-white tracking-tighter flex items-center gap-3 cursor-pointer" onClick={() => scrollTo('#home')}>
-            <span>Shatavarth Warulkar<span className="text-cyan-500">.</span></span>
-          </div>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {['Home', 'About', 'Experience', 'Skills', 'Blog', 'Contact'].map((item) => (
-              <NavLink 
-                key={item} 
-                href={`#${item.toLowerCase()}`}
-                active={activeSection === item.toLowerCase()}
-                onClick={() => scrollTo(`#${item.toLowerCase()}`)}
-              >
-                {item}
-              </NavLink>
-            ))}
-            <button 
-                onClick={() => scrollTo('#contact')}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded border border-slate-700 hover:border-cyan-500/50 transition-all flex items-center gap-2"
-            >
-                Hire Me
-            </button>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden text-slate-300 hover:text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-
-        {/* Mobile Nav */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-slate-900 border-b border-slate-800 p-6 flex flex-col gap-4 shadow-2xl absolute w-full top-16 left-0">
-            {['Home', 'About', 'Experience', 'Skills', 'Blog', 'Contact'].map((item) => (
-              <a 
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50"
-                onClick={(e) => {
-                    e.preventDefault();
-                    scrollTo(`#${item.toLowerCase()}`);
-                    setIsMenuOpen(false);
-                }}
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center pt-16 z-10 overflow-hidden">
-         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-            
-            <div className="order-2 md:order-1 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                Available for New Projects
-              </div>
-              
-              <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
-                Hi, I'm <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                  Shatavarth
-                </span>
-              </h1>
-              
-              <h2 className="text-xl md:text-2xl text-slate-400 font-light">
-                {personalInfo.title}
-              </h2>
-              
-              <p className="text-slate-400 max-w-lg leading-relaxed border-l-2 border-slate-700 pl-4">
-                Turning complex data into actionable business intelligence. Specialized in SQL, Power BI, Automation, and AI integration.
-              </p>
-
-              <div className="flex flex-wrap gap-4 pt-4">
-                <button 
-                  onClick={() => scrollTo('#experience')}
-                  className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg shadow-[0_0_20px_rgba(8,145,178,0.3)] hover:shadow-[0_0_25px_rgba(8,145,178,0.5)] transition-all flex items-center gap-2"
-                >
-                  View Experience <ChevronDown className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => scrollTo('#contact')}
-                  className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg border border-slate-700 flex items-center gap-2 transition-all"
-                >
-                  Contact Me
-                </button>
-              </div>
-
-              <div className="flex gap-6 pt-8 text-slate-500">
-                <a 
-                  href={`https://${personalInfo.linkedin}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  <Linkedin size={24} />
-                </a>
-                <a 
-                  href={`mailto:${personalInfo.email}`} 
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  <Mail size={24} />
-                </a>
-              </div>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="text-2xl font-bold text-white tracking-tighter flex items-center gap-3 cursor-pointer" onclick="document.getElementById('home').scrollIntoView({behavior: 'smooth'})">
+                <span>Shatavarth Warulkar<span class="text-cyan-500">.</span></span>
             </div>
 
-            {/* Visual/Graphic Side */}
-            <div className="order-1 md:order-2 flex justify-center relative">
-                <div className="relative w-72 h-72 md:w-96 md:h-96">
-                    {/* Animated Circles */}
-                    <div className="absolute inset-0 border border-slate-700 rounded-full animate-[spin_10s_linear_infinite]"></div>
-                    <div className="absolute inset-8 border border-dashed border-slate-600 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-                    <div className="absolute inset-20 border border-cyan-900/50 rounded-full bg-slate-900/50 backdrop-blur-sm flex items-center justify-center shadow-[0_0_50px_rgba(6,182,212,0.1)]">
-                       <Database className="w-16 h-16 text-cyan-500" />
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Home</a>
+                <a href="#about" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">About</a>
+                <a href="#experience" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Experience</a>
+                <a href="#skills" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Skills</a>
+                <a href="#blog" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Blog</a>
+                <a href="#contact" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Contact</a>
+                
+                <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" 
+                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded border border-slate-700 hover:border-cyan-500/50 transition-all flex items-center gap-2">
+                    Hire Me
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 p-6 flex flex-col gap-4 shadow-2xl absolute w-full top-16 left-0">
+            <a href="#home" class="mobile-link text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50">Home</a>
+            <a href="#about" class="mobile-link text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50">About</a>
+            <a href="#experience" class="mobile-link text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50">Experience</a>
+            <a href="#skills" class="mobile-link text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50">Skills</a>
+            <a href="#blog" class="mobile-link text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50">Blog</a>
+            <a href="#contact" class="mobile-link text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-slate-800/50">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-16 z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            
+            <div class="order-2 md:order-1 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                    Available for New Projects
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
+                    Hi, I'm <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                        Shatavarth
+                    </span>
+                </h1>
+                
+                <h2 class="text-xl md:text-2xl text-slate-400 font-light">
+                    Business Intelligence & Data Analyst
+                </h2>
+                
+                <p class="text-slate-400 max-w-lg leading-relaxed border-l-2 border-slate-700 pl-4">
+                    Turning complex data into actionable business intelligence. Specialized in SQL, Power BI, Automation, and AI integration.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <button onclick="document.getElementById('experience').scrollIntoView({behavior: 'smooth'})"
+                        class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg shadow-[0_0_20px_rgba(8,145,178,0.3)] hover:shadow-[0_0_25px_rgba(8,145,178,0.5)] transition-all flex items-center gap-2">
+                        View Experience <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+                        class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg border border-slate-700 flex items-center gap-2 transition-all">
+                        Contact Me
+                    </button>
+                </div>
+
+                <div class="flex gap-6 pt-8 text-slate-500">
+                    <a href="https://linkedin.com/in/shatavarth" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
+                        <i data-lucide="linkedin" class="w-6 h-6"></i>
+                    </a>
+                    <a href="mailto:shatavarth@gmail.com" class="hover:text-cyan-400 transition-colors">
+                        <i data-lucide="mail" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual/Graphic Side -->
+            <div class="order-1 md:order-2 flex justify-center relative">
+                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                    <!-- Animated Circles -->
+                    <div class="absolute inset-0 border border-slate-700 rounded-full animate-spin-slow"></div>
+                    <div class="absolute inset-8 border border-dashed border-slate-600 rounded-full animate-spin-reverse-slow"></div>
+                    <div class="absolute inset-20 border border-cyan-900/50 rounded-full bg-slate-900/50 backdrop-blur-sm flex items-center justify-center shadow-[0_0_50px_rgba(6,182,212,0.1)]">
+                       <i data-lucide="database" class="w-16 h-16 text-cyan-500"></i>
                     </div>
                     
-                    {/* Floating Tech Icons */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-lg animate-bounce">
-                        <BarChart3 className="w-6 h-6 text-yellow-500" />
+                    <!-- Floating Tech Icons -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-lg animate-bounce">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6 text-yellow-500"></i>
                     </div>
-                    <div className="absolute bottom-10 right-0 bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-lg animate-pulse">
-                        <Cpu className="w-6 h-6 text-blue-500" />
+                    <div class="absolute bottom-10 right-0 bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-lg animate-pulse">
+                        <i data-lucide="cpu" class="w-6 h-6 text-blue-500"></i>
                     </div>
-                    <div className="absolute bottom-10 left-0 bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-lg">
-                        <BrainCircuit className="w-6 h-6 text-purple-500" />
+                    <div class="absolute bottom-10 left-0 bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-lg">
+                        <i data-lucide="brain-circuit" class="w-6 h-6 text-purple-500"></i>
                     </div>
                 </div>
             </div>
-         </div>
-      </section>
+        </div>
+    </section>
 
-      {/* About Section */}
-      <section id="about" className="py-24 bg-slate-900/50 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle title="About Me" subtitle="The person behind the data" />
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 space-y-6 text-slate-300 leading-relaxed">
-               <p className="text-lg text-slate-200 font-medium">
-                 {personalInfo.summary}
-               </p>
-               <p>
-                 I am a proactive problem solver with a passion for efficiency. My journey spans from engineering to business analytics, allowing me to bridge the gap between technical complexity and strategic business needs. I don't just analyze data; I build systems that make data accessible, automated, and actionable.
-               </p>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-                  <div className="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
-                    <div className="text-3xl font-bold text-cyan-400 mb-1">3+</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-wide">Years Exp.</div>
-                  </div>
-                  <div className="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
-                    <div className="text-3xl font-bold text-cyan-400 mb-1">20+</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-wide">Projects</div>
-                  </div>
-                  <div className="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
-                    <div className="text-3xl font-bold text-cyan-400 mb-1">60%</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-wide">Efficiency Gain</div>
-                  </div>
-                  <div className="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
-                    <div className="text-3xl font-bold text-cyan-400 mb-1">6+</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-wide">Certifications</div>
-                  </div>
-               </div>
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-slate-900/50 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-cyan-500 rounded-sm inline-block"></span>
+                    About Me
+                </h2>
+                <p class="text-slate-400 ml-5">The person behind the data</p>
             </div>
-
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 shadow-xl">
-               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                 <GraduationCap className="text-cyan-400" /> Education
-               </h3>
-               <div className="space-y-6">
-                 {education.map((edu, index) => (
-                   <div key={index} className="relative pl-6 border-l border-slate-700">
-                     <div className="absolute left-[-4px] top-1.5 w-2 h-2 rounded-full bg-cyan-500"></div>
-                     <h4 className="text-white font-medium text-sm">{edu.degree}</h4>
-                     <p className="text-cyan-400 text-xs mt-1">{edu.school}</p>
-                     <p className="text-slate-500 text-xs mt-0.5">{edu.year}</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-2 space-y-6 text-slate-300 leading-relaxed">
+                   <p class="text-lg text-slate-200 font-medium">
+                     Business Intelligence & Data Analyst with 3+ years of experience in data analysis, business analysis, project management, and process automation. Adept at deriving actionable insights from complex data, leading cross-functional initiatives, and leveraging AI-powered tools to optimize workflows.
+                   </p>
+                   <p>
+                     I am a proactive problem solver with a passion for efficiency. My journey spans from engineering to business analytics, allowing me to bridge the gap between technical complexity and strategic business needs. I don't just analyze data; I build systems that make data accessible, automated, and actionable.
+                   </p>
+                   <!-- Stats Grid -->
+                   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+                      <div class="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
+                        <div class="text-3xl font-bold text-cyan-400 mb-1">3+</div>
+                        <div class="text-xs text-slate-400 uppercase tracking-wide">Years Exp.</div>
+                      </div>
+                      <div class="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
+                        <div class="text-3xl font-bold text-cyan-400 mb-1">20+</div>
+                        <div class="text-xs text-slate-400 uppercase tracking-wide">Projects</div>
+                      </div>
+                      <div class="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
+                        <div class="text-3xl font-bold text-cyan-400 mb-1">60%</div>
+                        <div class="text-xs text-slate-400 uppercase tracking-wide">Efficiency Gain</div>
+                      </div>
+                      <div class="bg-slate-800 p-4 rounded-lg text-center border border-slate-700">
+                        <div class="text-3xl font-bold text-cyan-400 mb-1">6+</div>
+                        <div class="text-xs text-slate-400 uppercase tracking-wide">Certifications</div>
+                      </div>
                    </div>
-                 ))}
-               </div>
+                </div>
+
+                <!-- Education Card -->
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 shadow-xl">
+                   <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                     <i data-lucide="graduation-cap" class="text-cyan-400"></i> Education
+                   </h3>
+                   <div class="space-y-6">
+                     <!-- Edu Item 1 -->
+                     <div class="relative pl-6 border-l border-slate-700">
+                       <div class="absolute left-[-4px] top-1.5 w-2 h-2 rounded-full bg-cyan-500"></div>
+                       <h4 class="text-white font-medium text-sm">Postgraduate Certificate, Project Management</h4>
+                       <p class="text-cyan-400 text-xs mt-1">Mohawk College, Canada</p>
+                       <p class="text-slate-500 text-xs mt-0.5">Jan 2024 - Aug 2024</p>
+                     </div>
+                     <!-- Edu Item 2 -->
+                     <div class="relative pl-6 border-l border-slate-700">
+                       <div class="absolute left-[-4px] top-1.5 w-2 h-2 rounded-full bg-cyan-500"></div>
+                       <h4 class="text-white font-medium text-sm">Postgraduate Certificate, Business Analytics</h4>
+                       <p class="text-cyan-400 text-xs mt-1">Mohawk College, Canada</p>
+                       <p class="text-slate-500 text-xs mt-0.5">Jan 2023 - Oct 2023</p>
+                     </div>
+                     <!-- Edu Item 3 -->
+                     <div class="relative pl-6 border-l border-slate-700">
+                       <div class="absolute left-[-4px] top-1.5 w-2 h-2 rounded-full bg-cyan-500"></div>
+                       <h4 class="text-white font-medium text-sm">Bachelor of Engineering - Information Technology</h4>
+                       <p class="text-cyan-400 text-xs mt-1">Sinhgad College of Engineering, India</p>
+                       <p class="text-slate-500 text-xs mt-0.5">Graduated</p>
+                     </div>
+                   </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="py-24 relative z-10">
-        <div className="max-w-4xl mx-auto px-6">
-          <SectionTitle title="Professional Journey" subtitle="My career timeline" />
-          
-          <div className="relative mt-12">
-            {experience.map((job, index) => (
-              <TimelineItem 
-                key={index}
-                {...job}
-                isLast={index === experience.length - 1}
-              />
-            ))}
-          </div>
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 relative z-10">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-cyan-500 rounded-sm inline-block"></span>
+                    Professional Journey
+                </h2>
+                <p class="text-slate-400 ml-5">My career timeline</p>
+            </div>
+            
+            <div class="relative mt-12">
+                
+                <!-- Job 1 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="md:hidden absolute left-3 top-0 bottom-0 w-0.5 bg-slate-800 h-full"></div>
+                    <div class="md:grid md:grid-cols-12 md:gap-8">
+                        <!-- Date -->
+                        <div class="hidden md:block md:col-span-3 text-right pt-1 relative">
+                            <p class="text-cyan-400 font-mono text-sm">Nov 2023 – Present</p>
+                            <p class="text-slate-500 text-xs mt-1">Hamilton, ON</p>
+                            <div class="absolute right-[-21px] top-2 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                        </div>
+                        <!-- Line -->
+                        <div class="hidden md:block absolute left-[25%] top-0 bottom-0 w-0.5 bg-slate-800 -ml-[1px]"></div>
+                        <!-- Content -->
+                        <div class="md:col-span-9 mb-12 relative">
+                            <div class="md:hidden absolute left-[-25px] top-1.5 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                            <div class="md:hidden mb-2">
+                                <span class="text-cyan-400 text-xs font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Nov 2023 – Present</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Business Data Analyst</h3>
+                            <h4 class="text-lg text-slate-300 mb-3">Joseph Group <span class="text-slate-600 text-sm font-normal md:hidden">• Hamilton, ON</span></h4>
+                            <ul class="space-y-2 text-slate-400 text-sm">
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Developed and automated dashboards using Power BI, Excel, DAX, and SQL queries for operations and financial reporting.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Reduced manual tasks by 60% via automation solutions using Power Automate and Power Apps.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Leveraged Generative AI to build tools for operational analysis, reducing reporting time by 40%.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Partnered cross-functionally to implement process improvements using Agile, Lean, and Six Sigma methods.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="md:hidden absolute left-3 top-0 bottom-0 w-0.5 bg-slate-800 h-full"></div>
+                    <div class="md:grid md:grid-cols-12 md:gap-8">
+                        <div class="hidden md:block md:col-span-3 text-right pt-1 relative">
+                            <p class="text-cyan-400 font-mono text-sm">Sep 2023 – Oct 2023</p>
+                            <p class="text-slate-500 text-xs mt-1">Hamilton, ON</p>
+                            <div class="absolute right-[-21px] top-2 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                        </div>
+                        <div class="hidden md:block absolute left-[25%] top-0 bottom-0 w-0.5 bg-slate-800 -ml-[1px]"></div>
+                        <div class="md:col-span-9 mb-12 relative">
+                            <div class="md:hidden absolute left-[-25px] top-1.5 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                            <div class="md:hidden mb-2">
+                                <span class="text-cyan-400 text-xs font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Sep 2023 – Oct 2023</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Junior Business Analyst (Co-op)</h3>
+                            <h4 class="text-lg text-slate-300 mb-3">Joseph Group <span class="text-slate-600 text-sm font-normal md:hidden">• Hamilton, ON</span></h4>
+                            <ul class="space-y-2 text-slate-400 text-sm">
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Created and maintained SOPs, policies, and process documentation for operations.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Supported business operations through KPI tracking and dashboard development.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Used Jira, Confluence, and SharePoint to manage sprints, tasks, and documentation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job 3 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="md:hidden absolute left-3 top-0 bottom-0 w-0.5 bg-slate-800 h-full"></div>
+                    <div class="md:grid md:grid-cols-12 md:gap-8">
+                        <div class="hidden md:block md:col-span-3 text-right pt-1 relative">
+                            <p class="text-cyan-400 font-mono text-sm">Jan 2023 – Aug 2023</p>
+                            <p class="text-slate-500 text-xs mt-1">Hamilton, ON</p>
+                            <div class="absolute right-[-21px] top-2 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                        </div>
+                        <div class="hidden md:block absolute left-[25%] top-0 bottom-0 w-0.5 bg-slate-800 -ml-[1px]"></div>
+                        <div class="md:col-span-9 mb-12 relative">
+                            <div class="md:hidden absolute left-[-25px] top-1.5 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                            <div class="md:hidden mb-2">
+                                <span class="text-cyan-400 text-xs font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Jan 2023 – Aug 2023</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Business Analyst (Capstone)</h3>
+                            <h4 class="text-lg text-slate-300 mb-3">Mohawk College <span class="text-slate-600 text-sm font-normal md:hidden">• Hamilton, ON</span></h4>
+                            <ul class="space-y-2 text-slate-400 text-sm">
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Conducted stakeholder interviews/workshops to streamline Continuing Education application workflows.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Built wireframes and requirement docs leading to a 25% improvement in processing speed.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job 4 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="md:hidden absolute left-3 top-0 bottom-0 w-0.5 bg-slate-800 h-0"></div> <!-- h-0 Last item -->
+                    <div class="md:grid md:grid-cols-12 md:gap-8">
+                        <div class="hidden md:block md:col-span-3 text-right pt-1 relative">
+                            <p class="text-cyan-400 font-mono text-sm">Aug 2022 – Oct 2022</p>
+                            <p class="text-slate-500 text-xs mt-1">Pune, India</p>
+                            <div class="absolute right-[-21px] top-2 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                        </div>
+                        <div class="hidden md:block absolute left-[25%] top-0 bottom-0 w-0.5 bg-slate-800 -ml-[1px]"></div>
+                        <div class="md:col-span-9 mb-12 relative">
+                            <div class="md:hidden absolute left-[-25px] top-1.5 w-3 h-3 rounded-full bg-slate-800 border-2 border-cyan-500/50 group-hover:bg-cyan-500 transition-all z-10"></div>
+                            <div class="md:hidden mb-2">
+                                <span class="text-cyan-400 text-xs font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Aug 2022 – Oct 2022</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Junior BI Analyst</h3>
+                            <h4 class="text-lg text-slate-300 mb-3">Shri Shri Industries <span class="text-slate-600 text-sm font-normal md:hidden">• Pune, India</span></h4>
+                            <ul class="space-y-2 text-slate-400 text-sm">
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Developed analytical dashboards and automated Excel reports for production teams.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 bg-cyan-500 rounded-full flex-shrink-0"></span>Analyzed trends in cost, labor, and efficiency metrics to support decision-making.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </section>
+    </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-24 bg-slate-900/50 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle title="Technical Arsenal" subtitle="Tools and technologies I use to drive results" />
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-             {skills.technical.map((skill, index) => (
-               <SkillCard key={index} category={skill.name} items={skill.items} icon={skill.icon} />
-             ))}
-          </div>
-
-          <div className="mt-12 bg-slate-800/30 rounded-2xl p-8 border border-slate-700">
-             <h3 className="text-xl font-bold text-white mb-6 text-center">Certifications & Achievements</h3>
-             <div className="flex flex-wrap justify-center gap-3">
-               {certifications.map((cert, i) => (
-                 <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default">
-                    <Award className="w-4 h-4" /> {cert}
-                 </span>
-               ))}
-             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Section */}
-      <section id="blog" className="py-24 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle title="Latest Insights" subtitle="Thoughts on Data, AI, and Automation" />
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {blogs.map((post) => (
-              <BlogPost key={post.id} {...post} />
-            ))}
-          </div>
-          
-          <div className="mt-12 text-center">
-            <button className="px-8 py-3 bg-transparent border border-cyan-500 text-cyan-400 rounded hover:bg-cyan-500/10 transition-colors font-medium">
-              View All Posts
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-24 bg-gradient-to-t from-black to-slate-900 relative z-10">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <SectionTitle title="Get In Touch" />
-          <p className="text-slate-400 mb-12 text-lg">
-            Currently open to full-time opportunities in Data Analysis, BI, and Process Automation.
-            Let's build something efficient together.
-          </p>
-          
-          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-8 md:p-12 shadow-2xl">
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-               <a 
-                 href={`mailto:${personalInfo.email}`} 
-                 className="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-cyan-500/30"
-               >
-                 <div className="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                   <Mail size={24} />
-                 </div>
-                 <h3 className="text-white font-medium mb-1">Email Me</h3>
-                 <p className="text-sm text-slate-400 group-hover:text-cyan-400 transition-colors">{personalInfo.email}</p>
-               </a>
-
-               <a 
-                 href={`https://${personalInfo.linkedin}`} 
-                 target="_blank" 
-                 rel="noopener noreferrer" 
-                 className="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-blue-500/30"
-               >
-                 <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                   <Linkedin size={24} />
-                 </div>
-                 <h3 className="text-white font-medium mb-1">LinkedIn</h3>
-                 <p className="text-sm text-slate-400 group-hover:text-blue-400 transition-colors">Connect on LinkedIn</p>
-               </a>
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 bg-slate-900/50 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-cyan-500 rounded-sm inline-block"></span>
+                    Technical Arsenal
+                </h2>
+                <p class="text-slate-400 ml-5">Tools and technologies I use to drive results</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill 1 -->
+                <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div>
+                        <h3 class="font-semibold text-lg text-slate-100">BI Tools</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Power BI, Tableau, Excel, SQL, Cognos Analytics</p>
+                </div>
+                <!-- Skill 2 -->
+                <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i data-lucide="cpu" class="w-5 h-5"></i></div>
+                        <h3 class="font-semibold text-lg text-slate-100">Automation</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Power Automate, Power Apps</p>
+                </div>
+                <!-- Skill 3 -->
+                <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i data-lucide="brain-circuit" class="w-5 h-5"></i></div>
+                        <h3 class="font-semibold text-lg text-slate-100">AI Tools</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">OpenAI APIs, ChatGPT, Copilot, Gemini, Prompt Eng.</p>
+                </div>
+                <!-- Skill 4 -->
+                <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i data-lucide="database" class="w-5 h-5"></i></div>
+                        <h3 class="font-semibold text-lg text-slate-100">Database & Code</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">SQL Server, Python, C, Power Query</p>
+                </div>
+                <!-- Skill 5 -->
+                <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i data-lucide="layout" class="w-5 h-5"></i></div>
+                        <h3 class="font-semibold text-lg text-slate-100">Project Mgmt</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Jira, Confluence, Trello, Miro</p>
+                </div>
+                <!-- Skill 6 -->
+                <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400 group-hover:text-cyan-300">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i data-lucide="globe" class="w-5 h-5"></i></div>
+                        <h3 class="font-semibold text-lg text-slate-100">Web & Media</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">WordPress, HTML/CSS, Figma, Adobe Suite</p>
+                </div>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-slate-500 text-sm">
-               <span className="flex items-center gap-2"><MapPin size={16} /> {personalInfo.location}</span>
+            <!-- Certifications -->
+            <div class="mt-12 bg-slate-800/30 rounded-2xl p-8 border border-slate-700">
+                <h3 class="text-xl font-bold text-white mb-6 text-center">Certifications & Achievements</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="award" class="w-4 h-4"></i> IBM - Business Intelligence Analyst</span>
+                    <span class="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="award" class="w-4 h-4"></i> 360 Lean Six Sigma Yellow Belt</span>
+                    <span class="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="award" class="w-4 h-4"></i> IBM - Enterprise Design Thinking</span>
+                    <span class="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="award" class="w-4 h-4"></i> Python Website Development</span>
+                    <span class="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="award" class="w-4 h-4"></i> Generative AI for PM</span>
+                    <span class="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="award" class="w-4 h-4"></i> IIBA Member</span>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      {/* Footer */}
-      <footer className="py-8 bg-black text-center text-slate-600 text-sm border-t border-slate-900">
-        <p>© {new Date().getFullYear()} Shatavarth Warulkar. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
+    <!-- Blog Section -->
+    <section id="blog" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-cyan-500 rounded-sm inline-block"></span>
+                    Latest Insights
+                </h2>
+                <p class="text-slate-400 ml-5">Thoughts on Data, AI, and Automation</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Blog 1 -->
+                <article class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                    <div class="h-40 bg-gradient-to-br from-slate-800 to-slate-900 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <i data-lucide="terminal" class="w-12 h-12 text-slate-700 group-hover:text-cyan-500/50 transition-colors duration-500 transform group-hover:scale-110"></i>
+                        <div class="absolute top-4 right-4 text-xs font-bold text-cyan-500 bg-cyan-950/50 px-2 py-1 rounded border border-cyan-900">Artificial Intelligence</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="text-xs text-slate-500 mb-2 font-mono">October 12, 2025</div>
+                        <h3 class="text-lg font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors line-clamp-2">Optimizing BI Workflows with Generative AI</h3>
+                        <p class="text-slate-400 text-sm line-clamp-3 mb-4 flex-1">How LLMs can assist in writing complex DAX queries and cleaning SQL data faster than ever before.</p>
+                        <div class="flex items-center text-cyan-500 text-sm font-medium mt-auto group-hover:translate-x-1 transition-transform">Read Article <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></div>
+                    </div>
+                </article>
+
+                <!-- Blog 2 -->
+                <article class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                    <div class="h-40 bg-gradient-to-br from-slate-800 to-slate-900 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <i data-lucide="terminal" class="w-12 h-12 text-slate-700 group-hover:text-cyan-500/50 transition-colors duration-500 transform group-hover:scale-110"></i>
+                        <div class="absolute top-4 right-4 text-xs font-bold text-cyan-500 bg-cyan-950/50 px-2 py-1 rounded border border-cyan-900">Automation</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="text-xs text-slate-500 mb-2 font-mono">September 28, 2025</div>
+                        <h3 class="text-lg font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors line-clamp-2">Automating the Mundane: Power Automate in Action</h3>
+                        <p class="text-slate-400 text-sm line-clamp-3 mb-4 flex-1">A case study on reducing manual data entry by 60% using simple flows and SharePoint triggers.</p>
+                        <div class="flex items-center text-cyan-500 text-sm font-medium mt-auto group-hover:translate-x-1 transition-transform">Read Article <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></div>
+                    </div>
+                </article>
+
+                <!-- Blog 3 -->
+                <article class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                    <div class="h-40 bg-gradient-to-br from-slate-800 to-slate-900 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <i data-lucide="terminal" class="w-12 h-12 text-slate-700 group-hover:text-cyan-500/50 transition-colors duration-500 transform group-hover:scale-110"></i>
+                        <div class="absolute top-4 right-4 text-xs font-bold text-cyan-500 bg-cyan-950/50 px-2 py-1 rounded border border-cyan-900">Data Strategy</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="text-xs text-slate-500 mb-2 font-mono">August 15, 2025</div>
+                        <h3 class="text-lg font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors line-clamp-2">The Future of Data Governance</h3>
+                        <p class="text-slate-400 text-sm line-clamp-3 mb-4 flex-1">Why data governance is becoming the backbone of successful AI implementation in enterprise environments.</p>
+                        <div class="flex items-center text-cyan-500 text-sm font-medium mt-auto group-hover:translate-x-1 transition-transform">Read Article <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></div>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button class="px-8 py-3 bg-transparent border border-cyan-500 text-cyan-400 rounded hover:bg-cyan-500/10 transition-colors font-medium">
+                    View All Posts
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-gradient-to-t from-black to-slate-900 relative z-10">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center justify-center gap-3">
+                    <span class="w-2 h-8 bg-cyan-500 rounded-sm inline-block"></span>
+                    Get In Touch
+                </h2>
+            </div>
+            <p class="text-slate-400 mb-12 text-lg">
+                Currently open to full-time opportunities in Data Analysis, BI, and Process Automation.
+                Let's build something efficient together.
+            </p>
+            
+            <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-8 md:p-12 shadow-2xl">
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                   <a href="mailto:shatavarth@gmail.com" class="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-cyan-500/30">
+                     <div class="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                       <i data-lucide="mail" class="w-6 h-6"></i>
+                     </div>
+                     <h3 class="text-white font-medium mb-1">Email Me</h3>
+                     <p class="text-sm text-slate-400 group-hover:text-cyan-400 transition-colors">shatavarth@gmail.com</p>
+                   </a>
+    
+                   <a href="https://linkedin.com/in/shatavarth" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center justify-center p-6 bg-slate-900/80 rounded-xl hover:bg-slate-800 transition-colors border border-slate-800 hover:border-blue-500/30">
+                     <div class="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                       <i data-lucide="linkedin" class="w-6 h-6"></i>
+                     </div>
+                     <h3 class="text-white font-medium mb-1">LinkedIn</h3>
+                     <p class="text-sm text-slate-400 group-hover:text-blue-400 transition-colors">Connect on LinkedIn</p>
+                   </a>
+                </div>
+    
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-slate-500 text-sm">
+                   <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Toronto, ON</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-black text-center text-slate-600 text-sm border-t border-slate-900">
+        <p>© 2025 Shatavarth Warulkar. All rights reserved.</p>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.innerHTML = '<i data-lucide="x"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        // Close menu when clicking a link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+                lucide.createIcons();
+            });
+        });
+
+        // Scroll Logic for Navbar Background and Highlight
+        const navbar = document.getElementById('navbar');
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            // Navbar Blur
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-slate-950/80', 'backdrop-blur-md', 'border-b', 'border-slate-800', 'shadow-lg');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.remove('bg-slate-950/80', 'backdrop-blur-md', 'border-b', 'border-slate-800', 'shadow-lg');
+                navbar.classList.add('py-4');
+            }
+
+            // Scroll Spy
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-cyan-400');
+                link.classList.add('text-slate-400');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('text-cyan-400');
+                    link.classList.remove('text-slate-400');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
