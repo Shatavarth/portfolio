@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Shatavarth Warulkar</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar to match main site */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        
+        /* Typography adjustments for readability */
+        .prose p { margin-bottom: 1.5em; }
+        .prose strong { color: #e2e8f0; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-100">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 py-4">
+        <div class="max-w-4xl mx-auto px-6 flex items-center justify-between">
+            <a href="portfolio.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Back to Portfolio
+            </a>
+            <div class="text-xl font-bold text-white tracking-tighter">
+                Shatavarth Warulkar<span class="text-cyan-500">.</span> Blog
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="pt-32 pb-16 px-6 text-center relative overflow-hidden">
+        <!-- Background accents -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] -z-10"></div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Latest Insights</h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+            Exploring the intersection of Business Intelligence, Automation, and Artificial Intelligence.
+        </p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 pb-24 space-y-24">
+
+        <!-- Article 1 -->
+        <article id="post-1" class="scroll-mt-32">
+            <div class="mb-6 flex items-center gap-3 text-sm">
+                <span class="text-cyan-400 font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Artificial Intelligence</span>
+                <span class="text-slate-500">October 12, 2025</span>
+            </div>
+            
+            <h2 class="text-3xl font-bold text-white mb-6">Optimizing BI Workflows with Generative AI</h2>
+            
+            <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-lg">
+                <p>
+                    In the rapidly evolving landscape of Business Intelligence (BI), the integration of Generative AI is not just a trend—it's a paradigm shift. For years, analysts have spent countless hours debugging complex DAX measures, writing intricate SQL queries, and cleaning messy datasets. Today, Large Language Models (LLMs) are transforming these workflows, allowing us to focus less on syntax and more on strategy.
+                </p>
+                <p>
+                    <strong>Accelerating DAX Development</strong><br>
+                    DAX (Data Analysis Expressions) is powerful but notoriously difficult to master. Generative AI tools can now act as a pair programmer. By simply describing the desired calculation in plain English—"calculate the year-over-year growth percentage for sales, filtering out returns"—an LLM can generate the precise DAX code required. This reduces the friction between having a business question and getting the answer.
+                </p>
+                <p>
+                    <strong>Smart Data Cleaning</strong><br>
+                    Data preparation often consumes 80% of an analyst's time. AI-driven tools in Power Query and Python can now suggest transformations automatically. Whether it's detecting anomalies in a sales column or normalizing inconsistent address formats, AI acts as a first line of defense against dirty data, ensuring that the insights we derive are based on a solid foundation.
+                </p>
+                <div class="bg-slate-900 border-l-4 border-cyan-500 p-6 my-8 rounded-r-lg">
+                    <p class="italic text-slate-400 m-0 text-xl">"The goal isn't to replace the analyst, but to remove the technical bottlenecks that prevent them from thinking like a business strategist."</p>
+                </div>
+                <p>
+                    As we move forward, the most successful BI professionals will be those who can orchestrate these AI tools effectively—mastering the art of prompt engineering to extract the most accurate and efficient code for their data models.
+                </p>
+            </div>
+        </article>
+
+        <hr class="border-slate-800" />
+
+        <!-- Article 2 -->
+        <article id="post-2" class="scroll-mt-32">
+            <div class="mb-6 flex items-center gap-3 text-sm">
+                <span class="text-cyan-400 font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Automation</span>
+                <span class="text-slate-500">September 28, 2025</span>
+            </div>
+            
+            <h2 class="text-3xl font-bold text-white mb-6">Automating the Mundane: Power Automate in Action</h2>
+            
+            <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-lg">
+                <p>
+                    Efficiency is the currency of modern operations. Yet, many organizations still rely on manual data entry and repetitive administrative tasks that drain productivity. In my recent work, I identified a critical bottleneck in operational reporting that was ripe for automation.
+                </p>
+                <p>
+                    <strong>The Problem</strong><br>
+                    Our team was manually extracting data from email attachments, formatting it in Excel, and uploading it to a SharePoint list. This process took approximately 15 hours a week across the department and was prone to human error.
+                </p>
+                <p>
+                    <strong>The Solution</strong><br>
+                    Leveraging Microsoft Power Automate, I designed a flow that triggered automatically whenever a specific email arrived. The flow:
+                </p>
+                <ul class="list-disc pl-5 space-y-2 marker:text-cyan-500 ml-4">
+                    <li>Parsed the email attachment using AI Builder.</li>
+                    <li>Transformed the data into a standardized JSON format.</li>
+                    <li>Updated the master SharePoint list directly.</li>
+                    <li>Sent a Teams notification to the manager confirming the update.</li>
+                </ul>
+                <p>
+                    <strong>The Impact</strong><br>
+                    The results were immediate. We reduced manual data entry by <strong>60%</strong>, freeing up the team to focus on analysis rather than data entry. More importantly, data accuracy improved to near 100%, as the potential for copy-paste errors was eliminated. This case study highlights that automation is not just about speed—it's about reliability and scalability.
+                </p>
+            </div>
+        </article>
+
+        <hr class="border-slate-800" />
+
+        <!-- Article 3 -->
+        <article id="post-3" class="scroll-mt-32">
+            <div class="mb-6 flex items-center gap-3 text-sm">
+                <span class="text-cyan-400 font-mono bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">Data Strategy</span>
+                <span class="text-slate-500">August 15, 2025</span>
+            </div>
+            
+            <h2 class="text-3xl font-bold text-white mb-6">The Future of Data Governance</h2>
+            
+            <div class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-lg">
+                <p>
+                    As Artificial Intelligence becomes ubiquitous in enterprise environments, the phrase "garbage in, garbage out" has never been more relevant. We are entering an era where Data Governance is shifting from a compliance checklist to a strategic imperative. Without robust governance, AI implementation is destined to fail.
+                </p>
+                <p>
+                    <strong>Governance as the Backbone of AI</strong><br>
+                    AI models are only as good as the data they are trained on. If an organization lacks clear policies on data lineage, quality standards, and access control, deploying AI can actually amplify risks rather than solve problems. Hallucinations in LLMs often stem from poor context or conflicting data sources within the enterprise.
+                </p>
+                <p>
+                    <strong>The Three Pillars of Modern Governance</strong>
+                </p>
+                <ul class="list-disc pl-5 space-y-2 marker:text-cyan-500 ml-4">
+                    <li><strong>Discoverability:</strong> Data must be cataloged. If analysts don't know data exists, they will create duplicate silos.</li>
+                    <li><strong>Security:</strong> With tools like Copilot accessing internal data, ensuring row-level security (RLS) is correctly implemented is non-negotiable.</li>
+                    <li><strong>Quality:</strong> Automated data quality scores should be visible to end-users, fostering trust in the reports they consume.</li>
+                </ul>
+                <p>
+                    The future belongs to organizations that treat data as a product—maintained, secured, and curated for consumption. Governance is the quality control process for that product.
+                </p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black text-center text-slate-600 text-sm border-t border-slate-900">
+        <p class="mb-4">© 2025 Shatavarth Warulkar. All rights reserved.</p>
+        <a href="portfolio.html" class="text-cyan-500 hover:text-cyan-400 transition-colors inline-flex items-center gap-1 group">
+            <i data-lucide="arrow-left" class="w-3 h-3 group-hover:-translate-x-1 transition-transform"></i> Return to Homepage
+        </a>
+    </footer>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
